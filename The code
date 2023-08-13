@@ -1,0 +1,41 @@
+import requests
+import json
+import os
+city = input("Enter city: \n")
+url = f"http://api.weatherapi.com/v1/current.json?key=30cb095ea7514033a80135308231208&q={city}"
+r = requests.get(url)
+dict = json.loads(r.text)
+print(r.text)
+a = dict["current"]["temp_c"]
+b = dict["current"]["temp_f"]
+c = dict["current"]["condition"]["text"]
+d = dict["current"]["wind_kph"]
+e = dict["current"]["wind_degree"]
+f = dict["current"]["wind_dir"]
+g = dict["current"]["feelslike_c"]
+h = dict["current"]["humidity"]
+print("The current temperature at", city, "is", dict["current"]["temp_c"])
+print("in Farenheit, ", dict["current"]["temp_f"])
+os.system(f"say 'The current temperature at {city} is {a} degrees celcius'")
+os.system(f"say 'and {b} degrees farenheit'")
+os.system(f"say 'it feels like {g} degrees celcius'")
+os.system(f"say 'humidity is {h} percent'")
+os.system(f"say 'it is {c} right now'")
+match f:
+    case "SW":
+        f = "South West"
+    case "SE":
+        f = "South East"
+    case "NE":
+        f = "North East"
+    case "NW":
+        f = "North West"
+    case "E":
+        f = "East"
+    case "W":
+        f = "West"
+    case "N":
+        f = "North"
+    case "S":
+        f = "South"
+os.system(f"say 'the wind speed is {d} kilometres per hour, at {e} degrees due {f}'")
